@@ -15,7 +15,6 @@
                     <option value="">Välj ditt kön</option>
                     <option value="male">Man</option>
                     <option value="female">Kvinna</option>
-                    <option value="other">Annat</option>
                 </select>
             </div>
                 <!-- Fabrikat -->
