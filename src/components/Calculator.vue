@@ -18,15 +18,15 @@
                 </select>
             </div>
                 <!-- Fabrikat -->
-            <div class="form-group">
-                <label for="make">Bilfabrikat</label>
-                <select id="make" v-model="selectedMake" @change="fetchModels" required>
-                    <option value="">Välj fabrikat</option>
-                    <option v-for="make in makes" :key="make.make_id" :value="make.make_display">
-                        {{ make.make_display }}
-                    </option>
-                </select>
-            </div>
+                <div class="form-group">
+                  <label for="make">Bilfabrikat</label>
+                  <select id="make" v-model="selectedMake" @change="fetchModels" required>
+                      <option value="">Välj fabrikat</option>
+                      <option v-for="make in makes" :key="make.make_id" :value="make.make_display">
+                          {{ make.make_display }}
+                      </option>
+                  </select>
+              </div>
             <!-- Modell -->
             <div class="form-group" v-if="models.length > 0">
                 <label for="model">Modell</label>
@@ -177,10 +177,21 @@ export default {
     async fetchMakes() {
       try {
         const response = await axios({
-          url: 'https://www.carqueryapi.com/api/0.3/?cmd=getMakes',
+          url: 'https://www.carqueryapi.com/api/0.3/',
           adapter: jsonpAdapter,
+          params: {
+            cmd: 'getMakes',
+            callback: 'callback',
+            year: '2020',
+          },
         });
-        this.makes = response.data.Makes;
+        // eslint-disable-next-line no-console
+        console.log('API Response:', response.data);
+        if (response.data && response.data.Makes) {
+          this.makes = response.data.Makes;
+          // eslint-disable-next-line no-console
+          console.log('Stored makes:', this.makes);
+        }
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('Fel vid hämtning av bilmärken:', error);
